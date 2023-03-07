@@ -1,68 +1,44 @@
-import { connect } from "./db.js";
+import Prop from "../models/prop.model.js";
 
 const propRepository = {
   createPropRepository: async function (prop) {
-    const conn = await connect();
     try {
-      const sql =
-        "INSERT INTO proprietarios (nome, telefone) VALUES ($1, $2) RETURNING *";
-      const values = [prop.nome, prop.telefone];
-      const res = await conn.query(sql, values);
-      return res.rows[0];
+      return await Prop.create(prop);
     } catch (error) {
       throw error;
-    } finally {
-      conn.release();
     }
   },
   updatePropRepository: async function (prop) {
-    const conn = await connect();
     try {
-      const sql =
-        "UPDATE proprietarios SET nome = $1, telefone = $2 WHERE proprietario_id = $3 RETURNING *";
-      const values = [prop.nome, prop.telefone, prop.proprietario_id];
-      const res = await conn.query(sql, values);
-      return res.rows[0];
+      await Prop.update(prop, {
+        where: {
+          proprietarioId: prop.proprietarioId,
+        },
+      });
+      return await propRepository.getPropByIdRepository(prop.proprietarioId)
     } catch (error) {
       throw error;
-    } finally {
-      conn.release();
     }
   },
   deletePropRepository: async function (id) {
-    const conn = await connect();
     try {
-      const sql = "DELETE FROM proprietarios WHERE proprietario_id = $1";
-      await conn.query(sql, [id]);
+      await Prop.destroy({ where: { proprietarioId: id } });
     } catch (error) {
       throw error;
-    } finally {
-      conn.release();
     }
   },
   getPropsRepository: async function () {
-    const conn = await connect();
     try {
-      const res = await conn.query("SELECT * FROM proprietarios");
-      return res.rows;
+      return await Prop.findAll();
     } catch (error) {
       throw error;
-    } finally {
-      conn.release();
     }
   },
   getPropByIdRepository: async function (id) {
-    const conn = await connect();
     try {
-      const res = await conn.query(
-        "SELECT * FROM proprietarios WHERE proprietario_id = $1",
-        [id]
-      );
-      return res.rows[0];
+      return await Prop.findByPk(id);
     } catch (error) {
       throw error;
-    } finally {
-      conn.release();
     }
   },
 };

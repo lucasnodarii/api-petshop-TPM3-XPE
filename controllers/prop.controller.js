@@ -20,7 +20,7 @@ const propController = {
     try {
       let prop = req.body;
 
-      if (!prop.proprietario_id || !prop.nome || !prop.telefone) {
+      if (!prop.proprietarioId || !prop.nome || !prop.telefone) {
         throw new Error("Os campos ID, nome e telefone são obrigatórios");
       }
       prop = await propService.updatePropService(prop);

@@ -4,7 +4,7 @@ const animalController = {
   createAnimal: async function (req, res, next) {
     try {
       let animal = req.body;
-      if (!animal.nome || !animal.tipo || !animal.proprietario_id) {
+      if (!animal.nome || !animal.tipo || !animal.proprietarioId) {
         throw new Error(
           "Os campos nome, tipo e ID do proprietário são obrigatórios"
         );
@@ -20,8 +20,8 @@ const animalController = {
     try {
       let animal = req.body;
       if (
-        (!animal.animal_id,
-        !animal.nome || !animal.tipo || !animal.proprietario_id)
+        (!animal.animalId,
+        !animal.nome || !animal.tipo || !animal.proprietarioId)
       ) {
         throw new Error(
           "Os campos ID de animal, nome, tipo e ID do proprietário são obrigatórios"
@@ -45,7 +45,7 @@ const animalController = {
   },
   getAnimals: async function (req, res, next){
     try{
-        res.send(await animalService.getAnimalsService(req.query.proprietario_id));   
+        res.send(await animalService.getAnimalsService(req.query.proprietarioId));   
         logger.info("GET /animal");    
     } catch (error) {
         next(error);

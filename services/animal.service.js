@@ -10,9 +10,9 @@ const animalService = {
   deleteAnimalService: async function (id) {
     await animalRepository.deleteAnimalRepository(id);
   },
-  getAnimalsService: async function (proprietario_id){
-    if(proprietario_id){
-        return await animalRepository.getAnimalsByPropRepository(proprietario_id);      
+  getAnimalsService: async function (proprietarioId){
+    if(proprietarioId){
+        return await animalRepository.getAnimalsByPropRepository(proprietarioId);      
     }
     return await animalRepository.getAnimalsRepository();
     
