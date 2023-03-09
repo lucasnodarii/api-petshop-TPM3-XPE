@@ -4,6 +4,7 @@ import winston from "winston";
 import propRouter from "./routes/prop.router.js";
 import animalRouter from "./routes/animal.router.js";
 import servicoRouter from "./routes/servico.router.js";
+import blogRouter from "./routes/blog.router.js";
 
 const { combine, timestamp, label, printf } = winston.format;
 const myFormat = printf(({ level, message, label, timestamp }) => {
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use("/proprietario", propRouter);
 app.use("/animal", animalRouter);
 app.use("/servico", servicoRouter);
+app.use("/post", blogRouter);
 app.use((error, req, res, next) => {
   logger.error(`${req.method} ${req.baseUrl} - ${error.message}`);
   res.status(400).send({ message: error.message });
